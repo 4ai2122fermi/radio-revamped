@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:lineSpacingExtra="8dp"
+        android:text="Radio Pazza"
+        android:textSize="24sp" />
+
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <RadioButton
+                    android:id="@+id/station1Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="RTL 102.5"
+                    android:tag="https://streamingv2.shoutcast.com/rtl-1025" />
+
+                <RadioButton
+                    android:id="@+id/station2Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Radio Kiss Kiss"
+                    android:tag="http://wma08.fluidstream.net:4610/" />
+
+
+                <RadioButton
+                    android:id="@+id/station3Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Radio Zeta L’Italiana"
+                    android:tag="http://shoutcast.rtl.it:3030/stream/1/"/>
+
+                <RadioButton
+                    android:id="@+id/station4Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Radionorba"
+                    android:tag="http://onair11.xdevel.com:9990/"/>
+
+                <RadioButton
+                    android:id="@+id/station5Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Virgin Radio"
+                    android:tag="http://icecast.unitedradio.it/Virgin.mp3"/>
+
+                <RadioButton
+                    android:id="@+id/station6Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Radio Rock"
+                    android:tag="http://rrock.fluidstream.eu/radiorock.mp3"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="30dp">
+
+                <RadioButton
+                    android:id="@+id/station7Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Rai Radio 1"
+                    android:tag="http://icestreaming.rai.it/1.mp3"/>
+
+                <RadioButton
+                    android:id="@+id/station8Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Rai Radio 2"
+                    android:tag="http://icestreaming.rai.it/2.mp3"/>
+
+                <RadioButton
+                    android:id="@+id/station9Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Rai Radio 3"
+                    android:tag="http://icestreaming.rai.it/3.mp3"/>
+
+                <RadioButton
+                    android:id="@+id/station10Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Rai Radio 5 Classica:"
+                    android:tag="http://icestreaming.rai.it/5.mp3"/>
+
+                <RadioButton
+                    android:id="@+id/station11Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Radio Playstudio"
+                    android:tag="https://rsd.streamingmedia.it/play.mp3"/>
+
+                <RadioButton
+                    android:id="@+id/station12Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="MikroRadio"
+                    android:tag="http://sr2.inmystream.info:8104/stream"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"
+        android:layout_marginTop="130dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="30dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
+
+        <Button
+            android:id="@+id/playButton"
+            android:layout_width="115dp"
+            android:layout_height="50dp"
+            android:text="Play"
+            android:textStyle="bold|italic"
+            android:textSize="25sp"
+            android:background="@drawable/button_normal"/>
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Reset"
+            android:layout_marginRight="20dp"
+            android:textStyle="bold|italic"
+            android:textSize="25sp"
+            android:background="@drawable/button_normal"/>
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="115dp"
+            android:layout_height="50dp"
+            android:text="Stop"
+            android:textStyle="bold|italic"
+            android:textSize="25sp"
+            android:background="@drawable/button_normal"/>
+    </LinearLayout>
+
+</LinearLayout>
