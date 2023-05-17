@@ -2,160 +2,50 @@ package com.example.radio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.media.MediaPlayer;
-import android.widget.RadioGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import java.io.IOException;
-
-
-
-
-
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
-    private Button playButton;
-    private Button stopButton;
-    private Button resetButton;
-
-    private RadioButton station1Button;
-    private RadioButton station2Button;
-    private RadioButton station3Button;
-    private RadioButton station4Button;
-    private RadioButton station5Button;
-    private RadioButton station6Button;
-    private RadioButton station7Button;
-    private RadioButton station8Button;
-    private RadioButton station9Button;
-    private RadioButton station10Button;
-    private RadioButton station11Button;
-    private RadioButton station12Button;
-
-    private RadioGroup radioGroup;
-    private  MediaPlayer mediaPlayer;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        playButton = findViewById(R.id.playButton);
-        stopButton = findViewById(R.id.stopButton);
-        resetButton=findViewById(R.id.resetButton);
+        // dovrei cambiarlo, ma non mi va
+        ListView list = findViewById(R.id.fanculoandroidstudio);
 
-        station1Button = findViewById(R.id.station1Button);
-        station2Button = findViewById(R.id.station2Button);
-        station3Button = findViewById(R.id.station3Button);
-        station4Button = findViewById(R.id.station4Button);
-        station5Button = findViewById(R.id.station5Button);
-        station6Button = findViewById(R.id.station6Button);
-        station7Button = findViewById(R.id.station7Button);
-        station8Button = findViewById(R.id.station8Button);
-        station9Button = findViewById(R.id.station9Button);
-        station10Button = findViewById(R.id.station10Button);
-        station11Button = findViewById(R.id.station11Button);
-        station12Button = findViewById(R.id.station12Button);
+        ArrayList<Radio> radios = new ArrayList<>();
+        radios.add(new Radio("RTL 102.5 *lenta*", R.drawable.rtl, "https://streamingv2.shoutcast.com/rtl-1025"));
+        radios.add(new Radio("Kiss Kiss", R.drawable.kisskiss, "http://wma08.fluidstream.net:4610/"));
+        radios.add(new Radio("Virgin Radio", R.drawable.virginradio, "http://icecast.unitedradio.it/Virgin.mp3"));
+        radios.add(new Radio("Radio Deejay", R.drawable.radiodeejay, "https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiodeejay/radiodeejay/play1.m3u8"));
+        radios.add(new Radio("Radio Zeta *lenta*", R.drawable.radiozeta, "https://streamingv2.shoutcast.com/radio-zeta"));
+        radios.add(new Radio("Radio Norba *non va", R.drawable.radionorba, "https://stream9.xdevel.com/audio0s975885-461/stream/icecast.audio"));
 
+        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), radios);
+        list.setAdapter(customAdapter);
+        list.setClickable(true);
 
-
-        playButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    playButton.setBackgroundResource(R.drawable.button_play);
-                    stopButton.setBackgroundResource(R.drawable.button_normal);
-
-                    String url = "";
-                    if (station1Button.isChecked()) {
-                        url = station1Button.getTag().toString();
-                    } else if (station2Button.isChecked()) {
-                        url = station2Button.getTag().toString();
-                    } else if (station3Button.isChecked()) {
-                        url = station3Button.getTag().toString();
-                    } else if (station4Button.isChecked()) {
-                        url = station4Button.getTag().toString();
-                    } else if (station5Button.isChecked()) {
-                        url = station5Button.getTag().toString();
-                    } else if (station6Button.isChecked()) {
-                        url = station6Button.getTag().toString();
-                    } else if (station7Button.isChecked()) {
-                        url = station7Button.getTag().toString();
-                    } else if (station8Button.isChecked()) {
-                        url = station8Button.getTag().toString();
-                    } else if (station9Button.isChecked()) {
-                        url = station9Button.getTag().toString();
-                    } else if (station10Button.isChecked()) {
-                        url = station10Button.getTag().toString();
-                    } else if (station11Button.isChecked()) {
-                        url = station11Button.getTag().toString();
-                    } else if (station12Button.isChecked()) {
-                        url = station12Button.getTag().toString();
-                    }
-
-                    if (url != null) {
-                        try {
-                            mediaPlayer = new MediaPlayer();
-                            mediaPlayer.setDataSource(url);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-
-
-
-            stopButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    playButton.setBackgroundResource(R.drawable.button_normal);
-                    stopButton.setBackgroundResource(R.drawable.button_stop);
-                    if(mediaPlayer != null && mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                    }
-                }
-            });
-
-
-        resetButton.setOnClickListener(new View.OnClickListener() {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onClick(View v) {
-                // Ripristina lo stato iniziale dei pulsanti delle stazioni radio
-                station1Button.setChecked(false);
-                station2Button.setChecked(false);
-                station3Button.setChecked(false);
-                station4Button.setChecked(false);
-                station5Button.setChecked(false);
-                station6Button.setChecked(false);
-                station7Button.setChecked(false);
-                station8Button.setChecked(false);
-                station9Button.setChecked(false);
-                station10Button.setChecked(false);
-                station11Button.setChecked(false);
-                station12Button.setChecked(false);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object o = parent.getItemAtPosition(position);
+                Radio item = (Radio) o;
 
-
-                playButton.setBackgroundResource(R.drawable.button_normal);
-                stopButton.setBackgroundResource(R.drawable.button_normal);
-
-
-                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                }
+                // quando avvio l'activity del player passo anche la lista completa delle radio,
+                // per sapere quale radio avviare quando l'utente usa i pulsanti previous e next
+                Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
+                intent.putExtra("to_be_played", item);
+                intent.putExtra("full_list", radios);
+                startActivity(intent);
             }
         });
-
-
     }
-    }
+}
 
