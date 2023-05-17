@@ -1,2 +1,2 @@
 # radio-revamped
-A radio that won't spy you, I swear
+Like [radio](https://github.com/n3ctonn/radio) but a lil bit better
