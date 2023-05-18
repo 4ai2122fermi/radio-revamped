@@ -2,6 +2,7 @@ package com.example.radio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -29,9 +30,9 @@ public class PlayerActivity extends AppCompatActivity {
 
         mediaPlayer = new MediaPlayer();
 
-        ImageButton previous = findViewById(R.id.btnPrevious);
-        ImageButton playPause = findViewById(R.id.btnPlayPause);
-        ImageButton next = findViewById(R.id.btnNext);
+        ImageButton previous = findViewById(R.id.previous);
+        ImageButton playPause = findViewById(R.id.playPause);
+        ImageButton next = findViewById(R.id.next);
 
         Intent intent = getIntent();
 

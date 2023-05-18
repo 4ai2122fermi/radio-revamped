@@ -42,21 +42,21 @@
         android:layout_marginTop="32dp">
 
         <ImageButton
-            android:id="@+id/btnPrevious"
+            android:id="@+id/previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/previous" />
 
         <ImageButton
-            android:id="@+id/btnPlayPause"
+            android:id="@+id/playPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/pause" />
 
         <ImageButton
-            android:id="@+id/btnNext"
+            android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
