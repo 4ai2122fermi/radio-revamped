@@ -24,20 +24,28 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"/>
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/radioName"
-        android:max="100"
-        android:layout_marginTop="32dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"/>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/volumeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/seekBar"
+        android:text="Volume"
+        android:textColor="#bababa"
+        android:textSize="20sp"
+        android:layout_below="@id/radioName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"/>
+
+    <SeekBar
+        android:id="@+id/volumeSeekBar"
+        android:layout_below="@id/volumeLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/streamControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/volumeSeekBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp">
 
@@ -62,5 +70,4 @@
             android:layout_margin="10dp"
             android:background="@drawable/next" />
     </LinearLayout>
-
 </RelativeLayout>

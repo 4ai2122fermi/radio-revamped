@@ -2,35 +2,30 @@ package com.example.radio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.media.MediaPlayer;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlayerActivity extends AppCompatActivity {
-    MediaPlayer mediaPlayer;
-    SeekBar seekBar;
+    RadioStreamingPlayer radioPlayer;
     Radio radio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_layout);
-
-        mediaPlayer = new MediaPlayer();
 
         ImageButton previous = findViewById(R.id.previous);
         ImageButton playPause = findViewById(R.id.playPause);
@@ -41,7 +36,7 @@ public class PlayerActivity extends AppCompatActivity {
         radio = (Radio) intent.getSerializableExtra("to_be_played");
         ArrayList<Radio> radios = (ArrayList<Radio>) intent.getSerializableExtra("full_list");
 
-        // faccio così p\erché per qualche motivo radios(indexOf(radio)) ritorna sempre -1
+        // faccio così perché per qualche motivo radios(indexOf(radio)) ritorna sempre -1
         // per risolvere faccio questo passaggio (idk, non sono uno sviluppatore java)
         for (Radio r : radios) {
             if (radio.url.equals(r.url))
@@ -54,26 +49,31 @@ public class PlayerActivity extends AppCompatActivity {
         TextView radioName = findViewById(R.id.radioName);
         radioName.setText(radio.name);
 
-        try {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(radio.url);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        } catch (IOException e) { e.printStackTrace(); }
+        radioPlayer = new RadioStreamingPlayer(radio.url);
+        try { radioPlayer.play(); }
+        catch (IOException e) {
+            Toast.makeText(PlayerActivity.this, "Errore! Controllare che il link sia corretto", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
 
-        // la seekBar per le radio è inutile, la blocco alla fine
-        seekBar = findViewById(R.id.seekBar);
-        seekBar.setProgress(seekBar.getMax());
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        // volume bar logic implementation
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        SeekBar volumeSeekBar = findViewById(R.id.volumeSeekBar);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        volumeSeekBar.setMax(maxVolume);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        volumeSeekBar.setProgress(currentVolume);
+
+        volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    seekBar.setProgress(seekBar.getMax());
-                }
+                // Set the volume to the progress value
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) { /* not implemented */ }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) { /* not implemented */ }
         });
@@ -91,8 +91,7 @@ public class PlayerActivity extends AppCompatActivity {
                 Radio previousRadio = radios.get(radios.indexOf(radio) - 1);
                 System.out.println(previousRadio.name);
 
-                mediaPlayer.stop();
-                mediaPlayer.release();
+                radioPlayer.stop();
                 finish();
 
                 // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
@@ -107,12 +106,12 @@ public class PlayerActivity extends AppCompatActivity {
         playPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
+                if (radioPlayer.isPlaying()) {
+                    radioPlayer.pause();
                     playPause.setBackgroundResource(R.drawable.play);
                 }
                 else {
-                    mediaPlayer.start();
+                    radioPlayer.start();
                     playPause.setBackgroundResource(R.drawable.pause);
                 }
             }
@@ -131,8 +130,7 @@ public class PlayerActivity extends AppCompatActivity {
                 Radio nextRadio = radios.get(radios.indexOf(radio) + 1);
                 System.out.println(nextRadio.name);
 
-                mediaPlayer.stop();
-                mediaPlayer.release();
+                radioPlayer.stop();
                 finish();
 
                 // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
@@ -150,8 +148,7 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
+            radioPlayer.stop();
             finish();
 
             Intent intent = new Intent(this, MainActivity.class);

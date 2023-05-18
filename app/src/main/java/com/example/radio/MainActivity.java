@@ -30,12 +30,12 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton add = findViewById(R.id.add);
 
         ArrayList<Radio> radios = new ArrayList<>();
-        radios.add(new Radio("RTL 102.5 *lenta*", R.drawable.rtl, "https://streamingv2.shoutcast.com/rtl-1025"));
+        radios.add(new Radio("RTL 102.5", R.drawable.rtl, "https://streamingv2.shoutcast.com/rtl-1025"));
         radios.add(new Radio("Kiss Kiss", R.drawable.kisskiss, "http://wma08.fluidstream.net:4610/"));
         radios.add(new Radio("Virgin Radio", R.drawable.virginradio, "http://icecast.unitedradio.it/Virgin.mp3"));
         radios.add(new Radio("Radio Deejay", R.drawable.radiodeejay, "https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiodeejay/radiodeejay/play1.m3u8"));
-        radios.add(new Radio("Radio Zeta *lenta*", R.drawable.radiozeta, "https://streamingv2.shoutcast.com/radio-zeta"));
-        radios.add(new Radio("Radio Norba *non va*", R.drawable.radionorba, "https://stream9.xdevel.com/audio0s975885-461/stream/icecast.audio"));
+        radios.add(new Radio("Radio Zeta", R.drawable.radiozeta, "https://streamingv2.shoutcast.com/radio-zeta"));
+        // radios.add(new Radio("Radio Norba *non va*", R.drawable.radionorba, "https://stream9.xdevel.com/audio0s975885-461/stream/icecast.audio"));
 
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), radios);
         list.setAdapter(customAdapter);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        radios.add(new Radio(name.getText().toString(), 0, url.getText().toString()));
+                        radios.add(new Radio(name.getText().toString(), R.drawable.user, url.getText().toString()));
                         customAdapter.notifyDataSetChanged();
                     }
                 });
