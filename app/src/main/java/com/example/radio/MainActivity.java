@@ -8,11 +8,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -59,6 +64,15 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Radio info");
 
+                TextView link = new TextView(MainActivity.this);
+                String text = "Click here for some popular radio urls!";
+                String redirect = "https://www.maccanismi.it/2012/08/21/elenco-url-streaming-radio-italiane-sul-web-rtl-rds-radio-kiss-kiss-r101-virgin-radio-e-moltre-altre/";
+                SpannableString spannableString = new SpannableString(text);
+                spannableString.setSpan(new URLSpan(redirect), 0, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                link.setText(spannableString);
+                link.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
+
                 EditText name = new EditText(MainActivity.this);
                 name.setHint("Insert radio name here...");
 
@@ -68,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout layout = new LinearLayout(MainActivity.this);
                 layout.setOrientation(LinearLayout.VERTICAL);
                 layout.setPadding(30, 30, 30, 30);
+                layout.addView(link);
                 layout.addView(name);
                 layout.addView(url);
                 builder.setView(layout);
