@@ -47,98 +47,73 @@ public class MainActivity extends AppCompatActivity {
         list.setClickable(true);
         list.setLongClickable(true);
 
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Confirm");
+        list.setOnItemLongClickListener((parent, view, position, id) -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Confirm");
 
-                TextView message = new TextView(MainActivity.this);
-                message.setText("Do you want to delete this radio from your list?");
-                message.setTextSize(20);
-                message.setPadding(50, 40, 40, 0);
-                builder.setView(message);
+            TextView message = new TextView(MainActivity.this);
+            message.setText("Do you want to delete this radio from your list?");
+            message.setTextSize(20);
+            message.setPadding(50, 40, 40, 0);
+            builder.setView(message);
 
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        radios.remove(radios.get(position));
-                        customAdapter.notifyDataSetChanged();
-                    }
-                });
+            builder.setPositiveButton("Yes", (dialog, which) -> {
+                radios.remove(radios.get(position));
+                customAdapter.notifyDataSetChanged();
+            });
 
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+            builder.setNegativeButton("No", (dialog, which) -> dialog.cancel());
 
-                builder.show();
-                return true;
-            }
+            builder.show();
+            return true;
         });
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // quando avvio l'activity del player passo anche la lista completa delle radio,
-                // per sapere quale radio avviare quando l'utente usa i pulsanti previous e next
-                Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
-                intent.putExtra("to_be_played", radios.get(position));
-                intent.putExtra("full_list", radios);
-                startActivity(intent);
-            }
+        list.setOnItemClickListener((parent, view, position, id) -> {
+            // quando avvio l'activity del player passo anche la lista completa delle radio,
+            // per sapere quale radio avviare quando l'utente usa i pulsanti previous e next
+            Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
+            intent.putExtra("to_be_played", radios.get(position));
+            intent.putExtra("full_list", radios);
+            startActivity(intent);
         });
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Radio info");
+        add.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Radio info");
 
-                TextView link = new TextView(MainActivity.this);
-                link.setTextSize(18);
-                link.setPadding(0, 20, 0, 20);
-                String text = "Click here for some popular radio urls!";
-                String redirect = "https://www.maccanismi.it/2012/08/21/elenco-url-streaming-radio-italiane-sul-web-rtl-rds-radio-kiss-kiss-r101-virgin-radio-e-moltre-altre/";
-                SpannableString spannableString = new SpannableString(text);
-                spannableString.setSpan(new URLSpan(redirect), 0, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            TextView link = new TextView(MainActivity.this);
+            link.setTextSize(18);
+            link.setPadding(0, 20, 0, 20);
+            String text = "Click here for some popular radio urls!";
+            String redirect = "https://www.maccanismi.it/2012/08/21/elenco-url-streaming-radio-italiane-sul-web-rtl-rds-radio-kiss-kiss-r101-virgin-radio-e-moltre-altre/";
+            SpannableString spannableString = new SpannableString(text);
+            spannableString.setSpan(new URLSpan(redirect), 0, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                link.setText(spannableString);
-                link.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
+            link.setText(spannableString);
+            link.setMovementMethod(LinkMovementMethod.getInstance());
 
-                EditText name = new EditText(MainActivity.this);
-                name.setHint("Insert radio name here...");
+            EditText name = new EditText(MainActivity.this);
+            name.setHint("Insert radio name here...");
 
-                EditText url = new EditText(MainActivity.this);
-                url.setHint("Insert radio url here...");
+            EditText url = new EditText(MainActivity.this);
+            url.setHint("Insert radio url here...");
 
-                LinearLayout layout = new LinearLayout(MainActivity.this);
-                layout.setOrientation(LinearLayout.VERTICAL);
-                layout.setPadding(50, 30, 30, 50);
-                layout.addView(link);
-                layout.addView(name);
-                layout.addView(url);
-                builder.setView(layout);
+            LinearLayout layout = new LinearLayout(MainActivity.this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(50, 30, 30, 50);
+            layout.addView(link);
+            layout.addView(name);
+            layout.addView(url);
+            builder.setView(layout);
 
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        radios.add(new Radio(name.getText().toString(), R.drawable.user, url.getText().toString()));
-                        customAdapter.notifyDataSetChanged();
-                    }
-                });
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                radios.add(new Radio(name.getText().toString(), R.drawable.user, url.getText().toString()));
+                customAdapter.notifyDataSetChanged();
+            });
 
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
-                builder.show();
-            }
+            builder.show();
         });
     }
 }

@@ -78,68 +78,59 @@ public class PlayerActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) { /* not implemented */ }
         });
 
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (radios.indexOf(radio) == 0) {
-                    Toast.makeText(PlayerActivity.this, "Non ci sono stazioni radio prima di questa!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        previous.setOnClickListener(v -> {
+            if (radios.indexOf(radio) == 0) {
+                Toast.makeText(PlayerActivity.this, "Non ci sono stazioni radio prima di questa!", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                // estraggo dalla lista la radio precedente a quella che stiamo ascoltando prendendo
-                // la radio che si trova di un indice sotto quella corrente
-                Radio previousRadio = radios.get(radios.indexOf(radio) - 1);
-                System.out.println(previousRadio.name);
+            // estraggo dalla lista la radio precedente a quella che stiamo ascoltando prendendo
+            // la radio che si trova di un indice sotto quella corrente
+            Radio previousRadio = radios.get(radios.indexOf(radio) - 1);
+            System.out.println(previousRadio.name);
 
-                radioPlayer.stop();
-                finish();
+            radioPlayer.stop();
+            finish();
 
-                // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
-                // per la radio precedente
-                Intent intent = new Intent(PlayerActivity.this, PlayerActivity.class);
-                intent.putExtra("to_be_played", previousRadio);
-                intent.putExtra("full_list", radios);
-                startActivity(intent);
+            // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
+            // per la radio precedente
+            Intent intent1 = new Intent(PlayerActivity.this, PlayerActivity.class);
+            intent1.putExtra("to_be_played", previousRadio);
+            intent1.putExtra("full_list", radios);
+            startActivity(intent1);
+        });
+
+        playPause.setOnClickListener(v -> {
+            if (radioPlayer.isPlaying()) {
+                radioPlayer.pause();
+                playPause.setBackgroundResource(R.drawable.play);
+            }
+            else {
+                radioPlayer.start();
+                playPause.setBackgroundResource(R.drawable.pause);
             }
         });
 
-        playPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (radioPlayer.isPlaying()) {
-                    radioPlayer.pause();
-                    playPause.setBackgroundResource(R.drawable.play);
-                }
-                else {
-                    radioPlayer.start();
-                    playPause.setBackgroundResource(R.drawable.pause);
-                }
+        next.setOnClickListener(v -> {
+            if (radios.indexOf(radio) == radios.size() - 1) {
+                Toast.makeText(PlayerActivity.this, "Non ci sono stazioni radio dopo questa!", Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (radios.indexOf(radio) == radios.size() - 1) {
-                    Toast.makeText(PlayerActivity.this, "Non ci sono stazioni radio dopo questa!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            // estraggo dalla lista la radio successiva a quella che stiamo ascoltando
+            // prendendo la radio che si trova di un indice sopra quella corrente
+            Radio nextRadio = radios.get(radios.indexOf(radio) + 1);
+            System.out.println(nextRadio.name);
 
-                // estraggo dalla lista la radio successiva a quella che stiamo ascoltando
-                // prendendo la radio che si trova di un indice sopra quella corrente
-                Radio nextRadio = radios.get(radios.indexOf(radio) + 1);
-                System.out.println(nextRadio.name);
+            radioPlayer.stop();
+            finish();
 
-                radioPlayer.stop();
-                finish();
-
-                // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
-                // per la radio successiva
-                Intent intent = new Intent(PlayerActivity.this, PlayerActivity.class);
-                intent.putExtra("to_be_played", nextRadio);
-                intent.putExtra("full_list", radios);
-                startActivity(intent);
-            }
+            // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
+            // per la radio successiva
+            Intent intent12 = new Intent(PlayerActivity.this, PlayerActivity.class);
+            intent12.putExtra("to_be_played", nextRadio);
+            intent12.putExtra("full_list", radios);
+            startActivity(intent12);
         });
     }
 
