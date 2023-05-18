@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:theme="@style/Theme.AppCompat"
-    tools:context=".MainActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent" >
 
-    <ListView
-        android:id="@+id/fanculoandroidstudio"
-        android:layout_width="match_parent"
-        android:listSelector="#d3d3d3"
-        android:layout_height="match_parent" />
-</LinearLayout>
+<ListView
+    android:id="@+id/fanculoandroidstudio"
+    android:layout_width="match_parent"
+    android:listSelector="#d3d3d3"
+    android:layout_height="match_parent"/>
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/add"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:src="@drawable/plus"
+    android:layout_alignParentEnd="true"
+    android:layout_margin="20dp"
+    />
+</RelativeLayout>
+

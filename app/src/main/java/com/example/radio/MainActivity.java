@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         // dovrei cambiarlo, ma non mi va
         ListView list = findViewById(R.id.fanculoandroidstudio);
+        FloatingActionButton add = findViewById(R.id.add);
 
         ArrayList<Radio> radios = new ArrayList<>();
         radios.add(new Radio("RTL 102.5 *lenta*", R.drawable.rtl, "https://streamingv2.shoutcast.com/rtl-1025"));
@@ -41,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("to_be_played", radios.get(position));
                 intent.putExtra("full_list", radios);
                 startActivity(intent);
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* to be implemented */
             }
         });
     }
