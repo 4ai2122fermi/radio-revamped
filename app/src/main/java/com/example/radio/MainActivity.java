@@ -1,12 +1,17 @@
 package com.example.radio;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         radios.add(new Radio("Virgin Radio", R.drawable.virginradio, "http://icecast.unitedradio.it/Virgin.mp3"));
         radios.add(new Radio("Radio Deejay", R.drawable.radiodeejay, "https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiodeejay/radiodeejay/play1.m3u8"));
         radios.add(new Radio("Radio Zeta *lenta*", R.drawable.radiozeta, "https://streamingv2.shoutcast.com/radio-zeta"));
-        radios.add(new Radio("Radio Norba *non va", R.drawable.radionorba, "https://stream9.xdevel.com/audio0s975885-461/stream/icecast.audio"));
+        radios.add(new Radio("Radio Norba *non va*", R.drawable.radionorba, "https://stream9.xdevel.com/audio0s975885-461/stream/icecast.audio"));
 
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), radios);
         list.setAdapter(customAdapter);
@@ -51,7 +56,38 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* to be implemented */
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Radio info");
+
+                EditText name = new EditText(MainActivity.this);
+                name.setHint("Insert radio name here...");
+
+                EditText url = new EditText(MainActivity.this);
+                url.setHint("Insert radio url here...");
+
+                LinearLayout layout = new LinearLayout(MainActivity.this);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setPadding(30, 30, 30, 30);
+                layout.addView(name);
+                layout.addView(url);
+                builder.setView(layout);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        radios.add(new Radio(name.getText().toString(), 0, url.getText().toString()));
+                        customAdapter.notifyDataSetChanged();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
     }
