@@ -35,13 +35,10 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object o = parent.getItemAtPosition(position);
-                Radio item = (Radio) o;
-
                 // quando avvio l'activity del player passo anche la lista completa delle radio,
                 // per sapere quale radio avviare quando l'utente usa i pulsanti previous e next
                 Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
-                intent.putExtra("to_be_played", item);
+                intent.putExtra("to_be_played", radios.get(position));
                 intent.putExtra("full_list", radios);
                 startActivity(intent);
             }
