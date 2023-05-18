@@ -39,7 +39,7 @@ public class PlayerActivity extends AppCompatActivity {
         radio = (Radio) intent.getSerializableExtra("to_be_played");
         ArrayList<Radio> radios = (ArrayList<Radio>) intent.getSerializableExtra("full_list");
 
-        // faccio così perché per qualche motivo radios(indexOf(radio)) ritorna sempre -1
+        // faccio così p\erché per qualche motivo radios(indexOf(radio)) ritorna sempre -1
         // per risolvere faccio questo passaggio (idk, non sono uno sviluppatore java)
         for (Radio r : radios) {
             if (radio.url.equals(r.url))
