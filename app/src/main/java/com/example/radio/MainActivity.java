@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.fanculoandroidstudio);
         FloatingActionButton add = findViewById(R.id.add);
 
+        // arraylist che contiene tutte le radio che l'utente inserirà
+        // aggiungo delle radio famose di base
         ArrayList<Radio> radios = new ArrayList<>();
         radios.add(new Radio("RTL 102.5", R.drawable.rtl, "https://streamingv2.shoutcast.com/rtl-1025"));
         radios.add(new Radio("Kiss Kiss", R.drawable.kisskiss, "http://wma08.fluidstream.net:4610/"));
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         list.setClickable(true);
         list.setLongClickable(true);
 
+        // premendo a lungo su un item della lista appare un dialog per la conferma
+        // della rimozione della radio selezionata
         list.setOnItemLongClickListener((parent, view, position, id) -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Confirm");
@@ -68,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
+        // con un semplice click parte l'activity dedicata al player della radio scelta
+        // passo la lista delle radio completa come extra per sapere quale radio avviare
+        // quando l'utente clicca sui tasti previous e next del player
         list.setOnItemClickListener((parent, view, position, id) -> {
             // quando avvio l'activity del player passo anche la lista completa delle radio,
             // per sapere quale radio avviare quando l'utente usa i pulsanti previous e next
@@ -77,10 +84,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // pulsante per l'aggiunta di una radio alla lista
         add.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Radio info");
 
+            // rendo il link nella textview cliccabile
             TextView link = new TextView(MainActivity.this);
             link.setTextSize(18);
             link.setPadding(0, 20, 0, 20);
@@ -98,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             EditText url = new EditText(MainActivity.this);
             url.setHint("Insert radio url here...");
 
+            // setup layout del dialog
             LinearLayout layout = new LinearLayout(MainActivity.this);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(50, 30, 30, 50);

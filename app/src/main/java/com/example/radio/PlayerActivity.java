@@ -56,18 +56,18 @@ public class PlayerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // volume bar logic implementation
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         SeekBar volumeSeekBar = findViewById(R.id.volumeSeekBar);
+
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         volumeSeekBar.setMax(maxVolume);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         volumeSeekBar.setProgress(currentVolume);
 
+        // logica della barra di controllo del volume
         volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // Set the volume to the progress value
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
             }
 
@@ -78,6 +78,7 @@ public class PlayerActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) { /* not implemented */ }
         });
 
+        // tasto per passare alla radio precedente
         previous.setOnClickListener(v -> {
             if (radios.indexOf(radio) == 0) {
                 Toast.makeText(PlayerActivity.this, "Non ci sono stazioni radio prima di questa!", Toast.LENGTH_SHORT).show();
@@ -100,6 +101,7 @@ public class PlayerActivity extends AppCompatActivity {
             startActivity(intent1);
         });
 
+        // questo si spiega da solo
         playPause.setOnClickListener(v -> {
             if (radioPlayer.isPlaying()) {
                 radioPlayer.pause();
@@ -111,6 +113,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
+        // tasto per passare alla radio successiva
         next.setOnClickListener(v -> {
             if (radios.indexOf(radio) == radios.size() - 1) {
                 Toast.makeText(PlayerActivity.this, "Non ci sono stazioni radio dopo questa!", Toast.LENGTH_SHORT).show();
