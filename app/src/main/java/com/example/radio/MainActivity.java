@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.text.style.URLSpan;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -84,16 +81,11 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Radio info");
 
-            // rendo il link nella textview cliccabile
+            // rendo il link "Click here for some popular radio urls!" nella textview cliccabile
             TextView link = new TextView(MainActivity.this);
             link.setTextSize(18);
             link.setPadding(0, 20, 0, 20);
-            String text = "Click here for some popular radio urls!";
-            String redirect = "https://www.maccanismi.it/2012/08/21/elenco-url-streaming-radio-italiane-sul-web-rtl-rds-radio-kiss-kiss-r101-virgin-radio-e-moltre-altre/";
-            SpannableString spannableString = new SpannableString(text);
-            spannableString.setSpan(new URLSpan(redirect), 0, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-            link.setText(spannableString);
+            link.setText(R.string.hyperlink);
             link.setMovementMethod(LinkMovementMethod.getInstance());
 
             EditText name = new EditText(MainActivity.this);

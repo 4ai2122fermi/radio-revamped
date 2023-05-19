@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Radio Pazza</string>
+    <string name="hyperlink"><a href="https://www.maccanismi.it/2012/08/21/elenco-url-streaming-radio-italiane-sul-web-rtl-rds-radio-kiss-kiss-r101-virgin-radio-e-moltre-altre/">Click here for some popular radio urls!</a></string>
 </resources>
