@@ -95,10 +95,10 @@ public class PlayerActivity extends AppCompatActivity {
 
             // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
             // per la radio precedente
-            Intent intent1 = new Intent(PlayerActivity.this, PlayerActivity.class);
-            intent1.putExtra("to_be_played", previousRadio);
-            intent1.putExtra("full_list", radios);
-            startActivity(intent1);
+            Intent previousRadioIntent = new Intent(PlayerActivity.this, PlayerActivity.class);
+            previousRadioIntent.putExtra("to_be_played", previousRadio);
+            previousRadioIntent.putExtra("full_list", radios);
+            startActivity(previousRadioIntent);
         });
 
         // questo si spiega da solo
@@ -130,10 +130,10 @@ public class PlayerActivity extends AppCompatActivity {
 
             // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
             // per la radio successiva
-            Intent intent12 = new Intent(PlayerActivity.this, PlayerActivity.class);
-            intent12.putExtra("to_be_played", nextRadio);
-            intent12.putExtra("full_list", radios);
-            startActivity(intent12);
+            Intent nextRadioIntent = new Intent(PlayerActivity.this, PlayerActivity.class);
+            nextRadioIntent.putExtra("to_be_played", nextRadio);
+            nextRadioIntent.putExtra("full_list", radios);
+            startActivity(nextRadioIntent);
         });
     }
 
