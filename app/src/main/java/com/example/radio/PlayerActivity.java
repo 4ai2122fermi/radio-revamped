@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
