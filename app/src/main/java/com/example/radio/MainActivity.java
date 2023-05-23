@@ -3,7 +3,9 @@ package com.example.radio;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.text.method.LinkMovementMethod;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -25,6 +28,17 @@ public class MainActivity extends AppCompatActivity {
         // dovrei cambiarlo, ma non mi va
         ListView list = findViewById(R.id.fanculoandroidstudio);
         FloatingActionButton add = findViewById(R.id.add);
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String personal_code = sharedPref.getString("personal_code", "");
+        if (personal_code.equals("")) {
+            String uuid = UUID.randomUUID().toString();
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("personal_code", uuid);
+            editor.apply();
+            personal_code = uuid;
+        }
+        final String user = personal_code;
 
         // arraylist che contiene tutte le radio che l'utente inserirà
         // aggiungo delle radio famose di base
@@ -73,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
             intent.putExtra("to_be_played", radios.get(position));
             intent.putExtra("full_list", radios);
+            intent.putExtra("user", user);
             startActivity(intent);
         });
 

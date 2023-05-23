@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class PlayerActivity extends AppCompatActivity {
     RadioStreamingPlayer radioPlayer;
+    ListeningSession session;
     Radio radio;
 
     @Override
@@ -34,6 +35,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         radio = (Radio) intent.getSerializableExtra("to_be_played");
         ArrayList<Radio> radios = (ArrayList<Radio>) intent.getSerializableExtra("full_list");
+        String UUID = intent.getStringExtra("user");
 
         // faccio così perché per qualche motivo radios(indexOf(radio)) ritorna sempre -1
         // per risolvere faccio questo passaggio (idk, non sono uno sviluppatore java)
@@ -54,6 +56,10 @@ public class PlayerActivity extends AppCompatActivity {
             Toast.makeText(PlayerActivity.this, "Errore! Controllare che il link sia corretto", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+
+        // avvio la sessione di ascolto per il tracciamento dell'utente
+        session = new ListeningSession(radio, UUID);
+        session.startSession();
 
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         SeekBar volumeSeekBar = findViewById(R.id.volumeSeekBar);
@@ -90,6 +96,8 @@ public class PlayerActivity extends AppCompatActivity {
             System.out.println(previousRadio.name);
 
             radioPlayer.stop();
+            session.stopSession();
+            session.send(PlayerActivity.this);
             finish();
 
             // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
@@ -125,6 +133,8 @@ public class PlayerActivity extends AppCompatActivity {
             System.out.println(nextRadio.name);
 
             radioPlayer.stop();
+            session.stopSession();
+            session.send(PlayerActivity.this);
             finish();
 
             // dopo aver chiuso del tutto l'activity della radio corrente avvio un'activity
@@ -142,6 +152,8 @@ public class PlayerActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             radioPlayer.stop();
+            session.stopSession();
+            session.send(PlayerActivity.this);
             finish();
 
             Intent intent = new Intent(this, MainActivity.class);
