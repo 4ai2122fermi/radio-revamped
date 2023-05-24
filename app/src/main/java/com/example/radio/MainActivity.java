@@ -46,14 +46,12 @@ public class MainActivity extends AppCompatActivity {
         final String user = personal_code;
 
         // arraylist che contiene tutte le radio che l'utente inserirà
-        // aggiungo delle radio famose di base
-        radios = new ArrayList<>();
-        // radios.add(new Radio("Radio Norba *non va*", R.drawable.radionorba, "https://stream9.xdevel.com/audio0s975885-461/stream/icecast.audio"));
-
         // quando la mainactivity viene aperta, carico le radio che l'utente ha inserito
+        // se è la prima volta che l'utente apre l'app, carico delle radio di esempio
+        radios = new ArrayList<>();
         Gson gson = new Gson();
-        String radio_list = sharedPref.getString("radio_list", null);
-        if (radio_list == null) {
+        String radio_list = sharedPref.getString("radio_list", "");
+        if (radio_list.equals("")) {
             SharedPreferences.Editor editor = sharedPref.edit();
 
             radios.add(new Radio("RTL 102.5", R.drawable.rtl, "https://streamingv2.shoutcast.com/rtl-1025"));
@@ -61,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             radios.add(new Radio("Virgin Radio", R.drawable.virginradio, "http://icecast.unitedradio.it/Virgin.mp3"));
             radios.add(new Radio("Radio Deejay", R.drawable.radiodeejay, "https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiodeejay/radiodeejay/play1.m3u8"));
             radios.add(new Radio("Radio Zeta", R.drawable.radiozeta, "https://streamingv2.shoutcast.com/radio-zeta"));
+
             radio_list = gson.toJson(radios);
             editor.putString("radio_list", radio_list);
             editor.apply();
