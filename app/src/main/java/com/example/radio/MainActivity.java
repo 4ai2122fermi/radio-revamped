@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         // dovrei cambiarlo, ma non mi va
         ListView list = findViewById(R.id.fanculoandroidstudio);
         FloatingActionButton add = findViewById(R.id.add);
+        FloatingActionButton recorder = findViewById(R.id.record);
 
         sharedPref = getPreferences(Context.MODE_PRIVATE);
         String personal_code = sharedPref.getString("personal_code", "");
@@ -145,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
             builder.setView(layout);
 
             builder.setPositiveButton("OK", (dialog, which) -> {
+                // utilizzando il codice "record" il pulsante segreto per la registrazione diventa visibile
+                if (url.getText().toString().equals("record")) {
+                    recorder.setVisibility(FloatingActionButton.VISIBLE);
+                    return;
+                }
+
                 Radio newRadio = new Radio(name.getText().toString(), R.drawable.user, url.getText().toString());
                 radios.add(newRadio);
 
@@ -160,6 +168,10 @@ public class MainActivity extends AppCompatActivity {
             builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
             builder.show();
+        });
+
+        recorder.setOnClickListener(v -> {
+            Toast.makeText(MainActivity.this, "Ahia! Mi hai scoperto!", Toast.LENGTH_SHORT).show();
         });
     }
 }
