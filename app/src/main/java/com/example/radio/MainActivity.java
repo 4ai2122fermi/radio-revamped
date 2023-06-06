@@ -3,6 +3,7 @@ package com.example.radio;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // dovrei cambiarlo, ma non mi va
-        ListView list = findViewById(R.id.fanculoandroidstudio);
+        ListView list = findViewById(R.id.main_list);
         FloatingActionButton add = findViewById(R.id.add);
         FloatingActionButton recorder = findViewById(R.id.record);
 
